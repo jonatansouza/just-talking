@@ -1,5 +1,6 @@
-var express = require('express');
-var app = express();
+var app = require('./config/express')();
+var passport = require('./config/passport')(app);
+var database = require('./config/database')();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
@@ -9,21 +10,16 @@ connections = [];
 server.listen(process.env.PORT || 4000);
 console.log('Server Running');
 
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
-
 io.sockets.on('connection', function(socket) {
     connections.push(socket);
     console.log('Connected: ' + connections.length + ' Sockets connected');
 
     //Disconnected
     socket.on('disconnect', function(data) {
-        users.splice(users.indexOf(socket.username), 1);
+        io.sockets.emit('user off', users.splice(users.indexOf(socket.username), 1));
         updateUsernames();
         connections.splice(connections.indexOf(socket), 1);
         console.log('Disconnected: ' + connections.length + ' Sockets connected');
-
     });
 
     //Message

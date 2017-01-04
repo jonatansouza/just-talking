@@ -1,0 +1,29 @@
+body {
+    font-family: 'Short Stack', cursive;
+    margin-top: 30px;
+}
+
+#userSession {
+    display: none;
+}
+
+.input-group-addon {
+    min-width: 70px; // if you want width please write here //
+    text-align: left;
+}
+
+.btn-login {
+    margin-top: 5px;
+}
+
+.btn-account{
+  margin-bottom: 5px;
+}
+
+.well-success{
+  background-color: #E5FFCC;
+}
+
+.well-warning{
+  background-color: #FFFFCC;
+}

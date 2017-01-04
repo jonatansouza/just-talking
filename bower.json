@@ -1,0 +1,23 @@
+{
+  "name": "just-talking",
+  "version": "1.0.0",
+  "authors": [
+    "Jonatan Souza"
+  ],
+  "description": "Simple chat",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^3.0.0",
+    "socket.io.client": "^1.3.5",
+    "font-awesome": "^4.7.0",
+    "moment": "^2.17.1"
+  }
+}

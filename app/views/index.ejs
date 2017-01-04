@@ -1,0 +1,73 @@
+<%- include layout/header -%>
+    <div class="container">
+        <div id="messageArea" class="row">
+            <div class="col-md-4">
+                <div class="well">
+                    <h3>Online Users </h3>
+                    <ul id="users" class="list-group"></ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="chat" id="chat"></div>
+                <form id="messageForm">
+                    <div class="form-group">
+                        <label>Enter a message</label>
+                        <textarea class="form-control" id="message" required></textarea>
+                        <br>
+                        <button type="button" name="button" class="btn btn-warning" onclick="clearChat()">Clear Chat</button>
+                        <input type="submit" class="btn btn-success pull-right" value="Send Message">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <input type="text" id="userSession" value="<%= user %>">
+    <script type="text/javascript">
+        function clearChat() {
+            $('#chat').empty();
+            $('#message').focus();
+        }
+        $(function() {
+            moment.locale('br');
+            var socket = io.connect();
+            var $messageForm = $('#messageForm');
+            var $message = $('#message');
+            var $chat = $('#chat');
+            var $messageArea = $('#messageArea');
+            var $userFormArea = $('#userFormArea');
+            var $userForm = $('#userForm');
+            var $users = $('#users');
+            var $username = $('#username');
+
+            $messageForm.submit(function(e) {
+                e.preventDefault();
+                socket.emit('send message', $message.val());
+                $message.val('');
+                $message.focus();
+            });
+
+            socket.on('new message', function(data) {
+                $chat.append('<div class="well"><strong class="text-info">@' + data.user + ' Says: </strong>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>');
+            });
+
+            socket.emit('new username', $('#userSession').val(), function(data) {
+                $chat.append('<div class="well well-success"><strong class="text-success">' + $('#userSession').val() + '</strong> join in chat  <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>');
+            });
+
+            socket.on('user off', function(data){
+                $chat.append('<div class="well well-warning"><strong class="text-warning">' + data + '</strong> is offline  <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>')
+            });
+
+            socket.on('get users', function(data) {
+                var html = '';
+                for (i = 0; i < data.length; i++) {
+                    html += '<li class="list-group-item">' + data[i] + '</i>';
+                }
+                $users.html(html);
+            });
+        });
+    </script>
+    </body>
+
+    </html>

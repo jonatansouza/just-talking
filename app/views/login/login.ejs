@@ -1,0 +1,30 @@
+<%- include ../layout/header -%>
+	<div class="container-fluid">
+
+
+		<div class="col-lg-4 col-lg-offset-3">
+			<% if(message.length > 0){%>
+				<h3 class="text-danger text-center"><%= message %></h3>
+				<% }%>
+					<div class="col-lg-offset-8">
+						<a class="btn-account" href="/signup">Create Account</a>
+					</div>
+					<form method="post">
+						<div class="form-group">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon" id="sizing-addon1">@</span>
+								<input type="text" class="form-control" placeholder="Username" name="username" aria-describedby="sizing-addon1">
+							</div>
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon" id="sizing-addon1"><i class="fa fa-key" aria-hidden="true"></i></span>
+								<input type="password" class="form-control" placeholder="Password" name="password" aria-describedby="sizing-addon1">
+							</div>
+							<button type="submit" class="btn btn-success btn-block btn-login">SIGN IN</button>
+						</div>
+					</form>
+		</div>
+
+	</div>
+	</body>
+
+	</html>
