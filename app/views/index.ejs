@@ -48,13 +48,32 @@
             var $lastUsername = '';
 
             $messageForm.submit(function(e) {
+
                 e.preventDefault();
-                socket.emit('send message', $message.val());
-                $message.val('');
-                $message.focus();
+
+                (function($) {
+                    $.sanitize = function(input) {
+                        var output = input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+                        replace(/<[\/\!]*?[^<>]*?>/gi, '').
+                        replace(/<style[^>]*?>.*?<\/style>/gi, '').
+                        replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '');
+                        return output;
+                    };
+                })(jQuery);
+
+                var m = $.sanitize($message.val());
+                if (m) {
+                    socket.emit('send message', m);
+                    $message.val('');
+                    $message.focus();
+                } else {
+                    $message.val('');
+                    $message.focus();
+                }
             });
 
             socket.on('new message', function(data) {
+
                 if (data.user === $lastUsername) {
                     $chat.children('.well').last().append('<p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></p>');
                 } else {
