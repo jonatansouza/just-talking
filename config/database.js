@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 // if OPENSHIFT env variables are present, use the available connection info:
-var uri = process.env.MONGOLAB_URI || "mongodb://localhost/just-talking";
+//var uri = process.env.MONGOLAB_URI || "mongodb://localhost/just-talking";
+var uri = "mongodb://admin:adm123@ds155747.mlab.com:55747/just-talking";
 
 module.exports = function() {
 
