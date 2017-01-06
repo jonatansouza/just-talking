@@ -1,6 +1,9 @@
 body {
     font-family: 'Short Stack', cursive;
-    margin-top: 30px;
+}
+
+.custom-margin{
+  margin-top: 30px;
 }
 
 #userSession {
