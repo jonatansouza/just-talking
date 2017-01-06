@@ -44,8 +44,7 @@
             var $userFormArea = $('#userFormArea');
             var $userForm = $('#userForm');
             var $users = $('#users');
-            var $username = $('#username');
-            var $lastUsername = '';
+            var $username = $('#userSession').val();
 
             $messageForm.submit(function(e) {
 
@@ -73,21 +72,29 @@
             });
 
             socket.on('new message', function(data) {
-
-                if (data.user === $lastUsername) {
+                if ($(".usernames").last().text() === data.user) {
                     $chat.children('.well').last().append('<p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></p>');
                 } else {
-                    $chat.append('<div class="well"><strong class="text-info">@' + data.user + ' Says: </strong><p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></p></div>');
+                    $chat.append('<div class="well"><p><strong class="text-info"><span class="usernames">' + data.user + '</span> Says: </strong></p><p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() +
+                        '</smal></span ></p></div>');
                 }
-                $lastUsername = data.user;
+
             });
 
-            socket.emit('new username', $('#userSession').val(), function(data) {
-                $chat.append('<div class="well well-success"><strong class="text-success">' + $('#userSession').val() + '</strong> join in chat  <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>');
+            socket.emit('new username', $username, function(data) {
+                console.log(data+ "added");
+            });
+
+            socket.on('new user in', function(data){
+              $chat.append('<div class="well well-success"><strong class="text-success"><span class="usernameStatus">' + data + '</span></strong> join in chat  <span class="pull-right"><small>' + moment().calendar() +
+                  '</smal></span ></div>');
             });
 
             socket.on('user off', function(data) {
-                $chat.append('<div class="well well-warning"><strong class="text-warning">' + data + '</strong> is offline  <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>')
+                if (data != $username) {
+                    $chat.append('<div class="well well-warning"><strong class="text-warning"><span class="usernameStatus">' + data + '</span></strong> is offline now <span class="pull-right"><small>' + moment().calendar() +
+                        '</smal></span ></div>')
+                }
             });
 
             socket.on('get users', function(data) {

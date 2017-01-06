@@ -24,7 +24,6 @@ io.sockets.on('connection', function(socket) {
 
     //Message
     socket.on('send message', function(data) {
-        console.log(data);
         io.sockets.emit('new message', {
             msg: data,
             user: socket.username
@@ -34,9 +33,16 @@ io.sockets.on('connection', function(socket) {
     //new users
     socket.on('new username', function(data, callback) {
         callback(true);
-        socket.username = data;
-        users.push(socket.username);
-        updateUsernames();
+        if (users.indexOf(data) == -1) {
+            socket.username = data;
+            io.sockets.emit('new user in', data);
+            console.log("new user in " + data);
+            users.push(socket.username);
+            updateUsernames();
+        } else {
+            socket.username = data;
+            updateUsernames();
+        }
     });
 
     function updateUsernames() {
