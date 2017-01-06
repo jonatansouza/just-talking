@@ -15,7 +15,7 @@
                         <textarea class="form-control" id="message" required></textarea>
                         <br>
                         <button type="button" name="button" class="btn btn-warning" onclick="clearChat()">Clear Chat</button>
-                        <input type="submit" class="btn btn-success pull-right" value="Send Message">
+                        <input type="submit" id="sendMessage" class="btn btn-success pull-right" value="Send Message">
                     </div>
                 </form>
             </div>
@@ -29,6 +29,12 @@
             $('#message').focus();
         }
         $(function() {
+            $("#message").keyup(function(event) {
+                if (event.keyCode == 13) {
+                    $("#sendMessage").click();
+                }
+            });
+
             moment.locale('br');
             var socket = io.connect();
             var $messageForm = $('#messageForm');
@@ -55,7 +61,7 @@
                 $chat.append('<div class="well well-success"><strong class="text-success">' + $('#userSession').val() + '</strong> join in chat  <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>');
             });
 
-            socket.on('user off', function(data){
+            socket.on('user off', function(data) {
                 $chat.append('<div class="well well-warning"><strong class="text-warning">' + data + '</strong> is offline  <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>')
             });
 
