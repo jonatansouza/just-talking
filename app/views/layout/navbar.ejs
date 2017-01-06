@@ -7,7 +7,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <p>
                     <img alt="Brand" src="/images/chat.png"> JUST | TALKING
                 </p>
@@ -17,9 +17,15 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li class="text-center">
-                    <a href="/logout">
-                        <i class="fa fa-sign-out"></i> Log out</a>
+                    <a href="#">
+                        <i class="fa fa-question"></i> Help</a>
                 </li>
+                <% if(user){%>
+                    <li class="text-center">
+                        <a href="/logout">
+                            <i class="fa fa-sign-out"></i> Log out</a>
+                    </li>
+                    <% }%>
             </ul>
         </div>
     </div>

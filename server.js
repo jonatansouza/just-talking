@@ -24,10 +24,12 @@ io.sockets.on('connection', function(socket) {
 
     //Message
     socket.on('send message', function(data) {
-        io.sockets.emit('new message', {
+        var m = {
             msg: data,
             user: socket.username
-        });
+        };
+        console.log(JSON.stringify(m));
+        io.sockets.emit('new message', m);
     });
 
     //new users
@@ -36,7 +38,7 @@ io.sockets.on('connection', function(socket) {
         if (users.indexOf(data) == -1) {
             socket.username = data;
             io.sockets.emit('new user in', data);
-            console.log("new user in " + data);
+            console.log("new user in: " + data);
             users.push(socket.username);
             updateUsernames();
         } else {
