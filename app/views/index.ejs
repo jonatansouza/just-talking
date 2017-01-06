@@ -45,6 +45,7 @@
             var $userForm = $('#userForm');
             var $users = $('#users');
             var $username = $('#username');
+            var $lastUsername = '';
 
             $messageForm.submit(function(e) {
                 e.preventDefault();
@@ -54,7 +55,12 @@
             });
 
             socket.on('new message', function(data) {
-                $chat.append('<div class="well"><strong class="text-info">@' + data.user + ' Says: </strong>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></div>');
+                if (data.user === $lastUsername) {
+                    $chat.children('.well').last().append('<p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></p>');
+                } else {
+                    $chat.append('<div class="well"><strong class="text-info">@' + data.user + ' Says: </strong><p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></p></div>');
+                }
+                $lastUsername = data.user;
             });
 
             socket.emit('new username', $('#userSession').val(), function(data) {
