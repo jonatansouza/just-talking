@@ -56,7 +56,7 @@
 						password: $('#password').val()
 					}
 					$.post("/signup", data, function(data){
-						bootbox.alert('<div class="text-center">Usuario <strong>'+ data.user.username +'</strong> Criado</div>!', function(){
+						bootbox.alert('<div class="text-center">Usuario <strong>'+ data.user.username +'</strong> Criado!</div>', function(){
 							window.location.href = "/";
 						});
 					});
