@@ -1,3 +1,4 @@
+<% user = false %>
 <%- include ../layout/header -%>
 	<div class="container-fluid">
 
@@ -50,7 +51,16 @@
 				event.preventDefault();
 				if ($('#password').val().length > 5) {
 					$('#messageError').empty();
-					$("#userForm").submit();
+					var data = {
+						username: $('#username').val(),
+						password: $('#password').val()
+					}
+					$.post("/signup", data, function(data){
+						bootbox.alert('<div class="text-center">Usuario <strong>'+ data.user.username +'</strong> Criado</div>!', function(){
+							window.location.href = "/";
+						});
+					});
+
 				} else {
 					$('#messageError').text('O campo Senha deve ter no minimo 6 caracteres!');
 				}

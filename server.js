@@ -28,7 +28,6 @@ io.sockets.on('connection', function(socket) {
             msg: data,
             user: socket.username
         };
-        console.log(JSON.stringify(m));
         io.sockets.emit('new message', m);
     });
 

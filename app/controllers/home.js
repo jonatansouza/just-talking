@@ -56,7 +56,10 @@ module.exports = function(app) {
                 console.log(err);
             } else {
                 console.log(user);
-                res.redirect('/');
+                res.json({
+                  status: 'ok',
+                  user: user
+                });
             }
         });
         /*User.findOrCreate({

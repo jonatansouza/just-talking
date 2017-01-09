@@ -15,7 +15,6 @@ module.exports = function(app){
     app.get('/logout', controller.logout);
     app.get('/signup', controller.signup);
     app.post('/signup', controller.saveUser);
-
     app.get('/free-user/:user', controller.checkUserFree);
 
 };
