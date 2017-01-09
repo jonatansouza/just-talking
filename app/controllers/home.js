@@ -1,9 +1,13 @@
-
 module.exports = function(app) {
     var controller = {};
     var User = app.models.user;
-    controller.index = function(req, res) {
-        res.render('index', {
+
+    controller.index = function(req, res){
+      res.render('index');
+    }
+
+    controller.chat = function(req, res) {
+        res.render('chat', {
             'user': req.user.username
         });
     };
@@ -19,8 +23,27 @@ module.exports = function(app) {
         res.redirect('/');
     };
 
-    controller.signup = function(req, res){
-      res.render('login/signup');
+    controller.signup = function(req, res) {
+        res.render('login/signup', {
+            message: req.flash('error')
+        });
+    }
+
+    controller.checkUserFree = function(req, res) {
+        User.findOne({
+            'username': req.params.user
+        }, function(err, user) {
+            if (user) {
+                res.json({
+                    status: true
+                });
+            } else {
+                res.json({
+                    status: false
+                });
+            }
+        });
+
     }
 
     controller.saveUser = function(req, res) {
@@ -28,9 +51,18 @@ module.exports = function(app) {
         user.username = req.body.username;
         user.password = req.body.password;
 
-        User.findOrCreate({
+        user.save(function(err, user) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(user);
+                res.redirect('/');
+            }
+        });
+        /*User.findOrCreate({
             'username': user.username
         }, user, function(err, user, create) {
+            console.log(create);
             if (create) {
                 user.save(function(err, user) {
                     if (err) {
@@ -41,10 +73,12 @@ module.exports = function(app) {
                 })
             }
             if (err) {
-                console.log(err);
+                res.render('login/signup', {
+                    message: err.ValidationError
+                });
             }
         });
-        res.redirect('/');
+        //res.redirect('/');*/
     };
 
     return controller;

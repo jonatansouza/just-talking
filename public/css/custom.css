@@ -2,8 +2,8 @@ body {
     font-family: 'Short Stack', cursive;
 }
 
-.custom-margin{
-  margin-top: 30px;
+.custom-margin {
+    margin-top: 30px;
 }
 
 #userSession {
@@ -19,14 +19,19 @@ body {
     margin-top: 5px;
 }
 
-.btn-account{
-  margin-bottom: 5px;
+.btn-account {
+    margin-bottom: 5px;
 }
 
-.well-success{
-  background-color: #E5FFCC;
+.well-success {
+    background-color: #E5FFCC;
 }
 
-.well-warning{
-  background-color: #FFFFCC;
+.well-warning {
+    background-color: #FFFFCC;
+}
+
+.jumbotron {
+    background-image: url("/images/backgroud.png");
+    background-size: cover;
 }

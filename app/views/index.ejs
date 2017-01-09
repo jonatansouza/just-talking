@@ -1,33 +1,15 @@
 <%- include layout/header -%>
-    <div class="container custom-margin">
-        <div id="messageArea" class="row">
-            <div class="col-md-4">
-                <div class="well">
-                    <h3>Online Users </h3>
-                    <ul id="users" class="list-group"></ul>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="chat" id="chat"></div>
-                <form id="messageForm">
-                    <div class="form-group">
-                        <label>Enter a message</label>
-                        <textarea class="form-control" id="message" required></textarea>
-                        <br>
-                        <button type="button" name="button" class="btn btn-warning" onclick="clearChat()">Clear Chat</button>
-                        <input type="submit" id="sendMessage" class="btn btn-success pull-right" value="Send Message">
-                    </div>
-                </form>
+    <div class="container-fluid custom-margin">
+        <div class="jumbotron">
+            <div class="text-center">
+                <h1>Just Talking</h1>
+                <p>Chat para conhecer pessoas e falar o que quiser!<br><small>Cadastre-se e aproveite!</small></p>
+                <p><a class="btn btn-success btn-lg" href="/login" role="button">Entrar</a>
+                    <a class="btn btn-primary btn-lg" href="/signup" role="button">Cadastrar</a></p>
             </div>
         </div>
-
     </div>
-    <input type="text" id="userSession" value="<%= user %>">
     <%- include layout/footer -%>
-    <script src="/vendor/socket.io.client/dist/socket.io-1.3.5.js"></script>
-    <script src="/vendor/moment/min/moment.min.js"></script>
-    <script src="/js/controller-sock.js"></script>
+        </body>
 
-    </body>
-
-    </html>
+        </html>

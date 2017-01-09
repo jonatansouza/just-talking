@@ -1,22 +1,61 @@
 <%- include ../layout/header -%>
 	<div class="container-fluid">
+
 		<div class="col-lg-4 col-lg-offset-3">
-			<form method="post">
+			<h4 class="text-danger text-center" id="messageError"></h4>
+			<form id="userForm" method="post">
 				<div class="form-group">
-					<div class="input-group input-group-lg">
+					<div id="inputUsername" class="input-group input-group-lg">
 						<span class="input-group-addon" id="sizing-addon1">@</span>
-						<input type="text" class="form-control" placeholder="Username" name="username" aria-describedby="sizing-addon1">
+						<input type="text" class="form-control" id="username" placeholder="Nickname" name="username" aria-describedby="sizing-addon1">
 					</div>
 					<div class="input-group input-group-lg">
 						<span class="input-group-addon" id="sizing-addon1"><i class="fa fa-key" aria-hidden="true"></i></span>
-						<input type="password" class="form-control" placeholder="Password" name="password" aria-describedby="sizing-addon1">
+						<input type="password" class="form-control" id="password" placeholder="Senha" name="password" aria-describedby="sizing-addon1">
 					</div>
-					<button type="submit" class="btn btn-primary btn-block btn-login">SIGN UP</button>
+					<button id="signupButton" class="btn btn-primary btn-block btn-login">Cadastrar</button>
 				</div>
 			</form>
 		</div>
 	</div>
 	<%- include ../layout/footer -%>
-	</body>
+		<script type="text/javascript">
+			$('#signupButton').prop('disabled', true);
+			$('#username').keyup(function(event) {
+				$('#signupButton').prop('disabled', true);
+				$('#messageError').empty();
+				if (/\s/.test($('#username').val())) {
+					$('#messageError').text('Não pode conter espaços!');
+					$('#signupButton').prop('disabled', true);
+				} else {
+					$.get("/free-user/" + $('#username').val(), function(data) {
+						if (data.status) {
+							$('#messageError').text('este nickname já esta sendo usado!');
+							$('#inputUsername').removeClass('has-success has-feedback');
+							$('#inputUsername').addClass('has-error');
+							$('#signupButton').prop('disabled', true);
+						} else {
+							$('#inputUsername').removeClass('has-error');
+							$('#inputUsername').addClass('has-success has-feedback');
+							$('#signupButton').prop('disabled', false);
+						}
+					});
+				}
+			});
+			$('#password').keyup(function(event) {
+				$('#messageError').empty();
+			});
 
-	</html>
+			$('#signupButton').click(function(event) {
+				event.preventDefault();
+				if ($('#password').val().length > 5) {
+					$('#messageError').empty();
+					$("#userForm").submit();
+				} else {
+					$('#messageError').text('O campo Senha deve ter no minimo 6 caracteres!');
+				}
+			});
+		</script>
+		</body>
+
+		</html>

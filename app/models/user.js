@@ -16,10 +16,7 @@ module.exports = function() {
         },
         password: {
             type: String,
-            required: true,
-            validate: [validators.isAlphanumeric({
-                message: 'Apenas letras e números'
-            })]
+            required: true
         }
     });
 

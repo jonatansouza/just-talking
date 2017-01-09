@@ -7,7 +7,7 @@ module.exports = function(app){
     app.route('/login')
         .get(controller.login)
         .post(passport.authenticate('local', {
-            successRedirect: '/',
+            successRedirect: '/chat',
             failureRedirect: '/login',
             failureFlash: true
         }));
@@ -15,5 +15,7 @@ module.exports = function(app){
     app.get('/logout', controller.logout);
     app.get('/signup', controller.signup);
     app.post('/signup', controller.saveUser);
+
+    app.get('/free-user/:user', controller.checkUserFree);
 
 };
