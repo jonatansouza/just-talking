@@ -17,6 +17,9 @@ module.exports = function() {
         password: {
             type: String,
             required: true
+        },
+        desc: {
+          type:String
         }
     });
 

@@ -2,8 +2,24 @@ module.exports = function(app) {
     var controller = {};
     var User = app.models.user;
 
-    controller.index = function(req, res){
-      res.render('index');
+    controller.getUser = function(req, res) {
+        User.findOne({
+            'username': req.params.user
+        }, function(err, user) {
+            console.log(user);
+            if (user) {
+                res.render('users/profile', {
+                    user: user
+                });
+            } else {
+                res.status(500);
+            }
+        });
+
+    }
+
+    controller.index = function(req, res) {
+        res.render('index');
     }
 
     controller.chat = function(req, res) {
@@ -57,8 +73,8 @@ module.exports = function(app) {
             } else {
                 console.log(user);
                 res.json({
-                  status: 'ok',
-                  user: user
+                    status: 'ok',
+                    user: user
                 });
             }
         });

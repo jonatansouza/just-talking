@@ -49,7 +49,7 @@ $(function() {
         if ($(".usernames").last().text() === data.user) {
             $chat.children('.well').last().append('<p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() + '</smal></span ></p>');
         } else {
-            $chat.append('<div class="well"><p><strong class="text-info"><span class="usernames">' + data.user + '</span> Says: </strong></p><p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() +
+            $chat.append('<div class="well"><p><strong class="text-info"><span class="usernames">' + data.user + '</span> Diz: </strong></p><p>' + data.msg + ' <span class="pull-right"><small>' + moment().calendar() +
                 '</smal></span ></p></div>');
         }
 
@@ -60,13 +60,13 @@ $(function() {
     });
 
     socket.on('new user in', function(data){
-      $chat.append('<div class="well well-success"><strong class="text-success"><span class="usernameStatus">' + data + '</span></strong> join in chat  <span class="pull-right"><small>' + moment().calendar() +
+      $chat.append('<div class="well well-success"><strong class="text-success"><span class="usernameStatus">' + data + '</span></strong> entrou no chat  <span class="pull-right"><small>' + moment().calendar() +
           '</smal></span ></div>');
     });
 
     socket.on('user off', function(data) {
         if (data != $username) {
-            $chat.append('<div class="well well-warning"><strong class="text-warning"><span class="usernameStatus">' + data + '</span></strong> is offline now <span class="pull-right"><small>' + moment().calendar() +
+            $chat.append('<div class="well well-warning"><strong class="text-warning"><span class="usernameStatus">' + data + '</span></strong> está offline agora <span class="pull-right"><small>' + moment().calendar() +
                 '</smal></span ></div>')
         }
     });
@@ -74,7 +74,7 @@ $(function() {
     socket.on('get users', function(data) {
         var html = '';
         for (i = 0; i < data.length; i++) {
-            html += '<li class="list-group-item">' + data[i] + '</i>';
+            html += '<li class="list-group-item"><a href="/users/'+ data[i]+ '" >' + data[i] + '</a></li>';
         }
         $users.html(html);
     });

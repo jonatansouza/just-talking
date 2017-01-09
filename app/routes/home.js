@@ -4,5 +4,6 @@ module.exports = function(app) {
 
     app.get('/', controller.index);
     app.get('/chat', ensureLoggedIn('/login'), controller.chat);
+    app.get('/users/:user', ensureLoggedIn('/login'), controller.getUser);
 
 };
